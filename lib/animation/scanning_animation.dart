@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 
 class ScanningAnimation extends StatefulWidget {
   final bool isScanning;
+  final AnimationController animationController;
 
-  const ScanningAnimation({super.key, required this.isScanning});
+  const ScanningAnimation({
+    Key? key,
+    required this.isScanning,
+    required this.animationController,
+  }) : super(key: key);
 
   @override
   _ScanningAnimationState createState() => _ScanningAnimationState();
@@ -11,68 +16,46 @@ class ScanningAnimation extends StatefulWidget {
 
 class _ScanningAnimationState extends State<ScanningAnimation>
     with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
   late Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    );
-    _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _animationController.reverse();
-        } else if (status == AnimationStatus.dismissed) {
-          if (widget.isScanning) {
-            _animationController.forward();
-          }
-        }
-      });
+    _animation =
+        Tween<double>(begin: 0, end: 1).animate(widget.animationController);
+    // widget.animationController.addListener(() {
+    //   setState(() {});
+    // });
+    widget.animationController.repeat(reverse: true);
   }
 
   @override
   void dispose() {
-    _animationController.dispose();
+    widget.animationController.dispose();
     super.dispose();
   }
 
   @override
-  void didUpdateWidget(covariant ScanningAnimation oldWidget) {
-    if (widget.isScanning != oldWidget.isScanning) {
-      if (widget.isScanning) {
-        _animationController.forward();
-      } else {
-        _animationController.stop();
-      }
-    }
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _animation,
-      builder: (context, child) {
-        const double cardWidth = 360;
-        const double cardHeight = 200;
-        const double rectangleHeight = 100;
-        final double scanningPosition =
-            _animation.value * (cardHeight - rectangleHeight);
+    const double cardWidth = 360;
+    const double cardHeight = 280;
+    const double rectangleHeight = 180;
+    final double scanningPosition =
+        _animation.value * (cardHeight - rectangleHeight);
 
-        return Positioned(
-          top: scanningPosition,
-          child: Container(
-            width: cardWidth,
-            height: rectangleHeight,
-            margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-            // color: Colors.white.withOpacity(0.5),
-            color: const Color.fromARGB(255, 129, 121, 121).withOpacity(0.5),
-          ),
-        );
-      },
+    return Positioned(
+      top: scanningPosition,
+      child: Container(
+        width: cardWidth,
+        height: rectangleHeight,
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 223, 185, 135).withOpacity(0.3),
+          border: Border.all(
+              width: 2, color: const Color.fromARGB(255, 221, 183, 13)),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+      ),
     );
   }
 }
