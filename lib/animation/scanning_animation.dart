@@ -23,9 +23,6 @@ class _ScanningAnimationState extends State<ScanningAnimation>
     super.initState();
     _animation =
         Tween<double>(begin: 0, end: 1).animate(widget.animationController);
-    // widget.animationController.addListener(() {
-    //   setState(() {});
-    // });
     widget.animationController.repeat(reverse: true);
   }
 
