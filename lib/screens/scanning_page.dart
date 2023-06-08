@@ -14,26 +14,11 @@ class ScanningPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const <Widget>[
-            // Stack(
-            //   children: [
-            //     Card(
-            //       shape: RoundedRectangleBorder(
-            //         borderRadius: BorderRadius.circular(15),
-            //       ),
-            //       elevation: 4,
-            //       margin: const EdgeInsets.fromLTRB(30, 60, 30, 60),
-            //       child: Image.asset(
-            //         'assets/images/logg.PNG',
-            //         // fit: BoxFit.cover,
-            //       ),
-            //     ),
             ScanningAnimation(
               duration: Duration(seconds: 5),
               bgImage: 'assets/images/logg.PNG',
               color: Colors.yellow,
             ),
-            //   ],
-            // ),
           ],
         ),
       ),

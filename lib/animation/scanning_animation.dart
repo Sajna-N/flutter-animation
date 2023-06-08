@@ -13,10 +13,10 @@ class ScanningAnimation extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ScanningAnimationState createState() => _ScanningAnimationState();
+  ScanningAnimationState createState() => ScanningAnimationState();
 }
 
-class _ScanningAnimationState extends State<ScanningAnimation>
+class ScanningAnimationState extends State<ScanningAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -40,20 +40,24 @@ class _ScanningAnimationState extends State<ScanningAnimation>
 
   @override
   Widget build(BuildContext context) {
-    const double cardWidth = 360;
-    const double cardHeight = 280;
-    const double rectangleHeight = 180;
+    double imageWidth = MediaQuery.of(context).size.width - 50;
+    double imageHeight = MediaQuery.of(context).size.height / 4;
+    double cardHeight = imageHeight + 120;
+    double rectangleHeight = imageHeight + 30;
 
     return Stack(children: [
       Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        elevation: 4,
+        // elevation: 4,
         margin: const EdgeInsets.fromLTRB(30, 60, 30, 60),
         child: Image.asset(
           widget.bgImage,
-          // fit: BoxFit.cover,
+          width: imageWidth,
+          height: imageHeight,
+          // color: Colors.blue,
+          fit: BoxFit.fill,
         ),
       ),
       Positioned(
@@ -64,7 +68,7 @@ class _ScanningAnimationState extends State<ScanningAnimation>
                 _animation.value * (cardHeight - rectangleHeight);
 
             return Container(
-              width: cardWidth,
+              width: imageWidth + 50,
               height: rectangleHeight,
               decoration: BoxDecoration(
                 color: widget.color.withOpacity(0.3),
