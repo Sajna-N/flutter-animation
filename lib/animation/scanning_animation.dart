@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class ScanningAnimation extends StatefulWidget {
@@ -52,11 +54,10 @@ class ScanningAnimationState extends State<ScanningAnimation>
         ),
         // elevation: 4,
         margin: const EdgeInsets.fromLTRB(30, 60, 30, 60),
-        child: Image.asset(
-          widget.bgImage,
+        child: Image.file(
+          File(widget.bgImage),
           width: imageWidth,
           height: imageHeight,
-          // color: Colors.blue,
           fit: BoxFit.fill,
         ),
       ),
